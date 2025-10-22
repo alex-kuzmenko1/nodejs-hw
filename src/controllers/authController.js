@@ -4,7 +4,7 @@ import { User } from "../models/user.js";
 import { Session } from "../models/session.js";
 import { createSession, setSessionCookies } from "../services/auth.js";
 
-// 🟢 Реєстрація
+
 export const registerUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -30,7 +30,7 @@ export const registerUser = async (req, res, next) => {
   }
 };
 
-// 🟡 Логін
+
 export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -45,7 +45,7 @@ export const loginUser = async (req, res, next) => {
       throw createHttpError(401, "Invalid credentials");
     }
 
-    await Session.deleteMany({ userId: user._id }); // видаляємо старі сесії
+    await Session.deleteMany({ userId: user._id });
     const session = await createSession(user._id);
     setSessionCookies(res, session);
 
@@ -55,7 +55,7 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-// 🔁 Оновлення сесії
+
 export const refreshUserSession = async (req, res, next) => {
   try {
     const { sessionId, refreshToken } = req.cookies;
@@ -80,7 +80,7 @@ export const refreshUserSession = async (req, res, next) => {
   }
 };
 
-// 🔴 Логаут
+
 export const logoutUser = async (req, res, next) => {
   try {
     const { sessionId } = req.cookies;

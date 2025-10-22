@@ -22,7 +22,7 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-// Якщо username не заданий — встановлюємо його як email
+
 userSchema.pre("save", function (next) {
   if (!this.username) {
     this.username = this.email;
@@ -30,14 +30,14 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-// Видаляємо пароль перед відправкою у відповідь
+
 userSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;
   return user;
 };
 
-// Метод для перевірки пароля
+
 userSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };

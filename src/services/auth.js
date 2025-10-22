@@ -4,11 +4,8 @@ import { FIFTEEN_MINUTES, ONE_DAY } from "../constants/time.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
-/**
- * Створює нову сесію користувача
- */
 export const createSession = async (userId) => {
-  // Створюємо токени
+
   const accessToken = jwt.sign({ userId }, JWT_SECRET, {
     expiresIn: "15m",
   });
@@ -16,11 +13,11 @@ export const createSession = async (userId) => {
     expiresIn: "1d",
   });
 
-  // Час дії
+
   const accessTokenValidUntil = new Date(Date.now() + FIFTEEN_MINUTES);
   const refreshTokenValidUntil = new Date(Date.now() + ONE_DAY);
 
-  // Створюємо сесію в базі
+
   const session = await Session.create({
     userId,
     accessToken,
@@ -32,9 +29,8 @@ export const createSession = async (userId) => {
   return session;
 };
 
-/**
- * Встановлює кукі з токенами
- */
+
+
 export const setSessionCookies = (res, session) => {
   const cookieOptionsAccess = {
     httpOnly: true,
