@@ -2,33 +2,26 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { errors } from 'celebrate';
+import cookieParser from 'cookie-parser';
 
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
-
 import notesRoutes from './routes/notesRoutes.js';
-import cookieParser from "cookie-parser";
-app.use(cookieParser());
-const app = express();
+
+const app = express(); 
 const PORT = process.env.PORT || 3030;
 
-
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(logger);
 
-
 app.use(notesRoutes);
 
-
 app.use(notFoundHandler);
-
-
 app.use(errors());
-
-
 app.use(errorHandler);
 
 const startServer = async () => {
