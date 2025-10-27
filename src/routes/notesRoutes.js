@@ -16,23 +16,14 @@ import {
 
 const router = Router();
 
+router.get("/notes", celebrate(getAllNotesSchema), getAllNotes);
 
-router.get("/", celebrate(getAllNotesSchema), getAllNotes);
+router.get("/notes/:noteId", celebrate(noteIdSchema), getNoteById);
 
+router.post("/notes", celebrate(createNoteSchema), createNote);
 
-router.get("/:noteId", celebrate(noteIdSchema), getNoteById);
+router.delete("/notes/:noteId", celebrate(noteIdSchema), deleteNote);
 
-
-router.post("/", celebrate(createNoteSchema), createNote);
-
-
-router.delete("/:noteId", celebrate(noteIdSchema), deleteNote);
-
-
-router.patch(
-  "/:noteId",
-  celebrate(updateNoteSchema),
-  updateNote
-);
+router.patch("/notes/:noteId", celebrate(updateNoteSchema), updateNote);
 
 export default router;
