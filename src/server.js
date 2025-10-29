@@ -11,6 +11,8 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 import authRoutes from './routes/authRoutes.js';
 import notesRoutes from './routes/notesRoutes.js';
+import userRoutes from "./routes/userRoutes.js";
+
 
 const app = express();
 const PORT = process.env.PORT || 3030;
@@ -22,7 +24,7 @@ app.use(cookieParser());
 
 app.use(authRoutes);
 app.use(notesRoutes);
-
+app.use("/api", userRoutes); 
 app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);
