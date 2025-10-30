@@ -1,7 +1,7 @@
-import {v2 as cloudinary} from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import { Readable } from "stream";
 
-cloudinary.v2.config({
+cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
@@ -9,7 +9,7 @@ cloudinary.v2.config({
 
 export const saveFileToCloudinary = (buffer) => {
   return new Promise((resolve, reject) => {
-    const uploadStream = cloudinary.v2.uploader.upload_stream(
+    const uploadStream = cloudinary.uploader.upload_stream(
       { folder: "avatars" },
       (error, result) => {
         if (error) return reject(error);
