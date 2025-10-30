@@ -18,10 +18,13 @@ const userSchema = new Schema(
       required: true,
       minlength: 8,
     },
+    avatar: {
+      type: String,
+      default: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+    },
   },
   { timestamps: true }
 );
-
 
 userSchema.pre("save", function (next) {
   if (!this.username) {
@@ -30,13 +33,11 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-
 userSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;
   return user;
 };
-
 
 userSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password);

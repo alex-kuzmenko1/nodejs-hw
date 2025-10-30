@@ -4,7 +4,7 @@ import { User } from "../models/user.js";
 
 export const updateUserAvatar = async (req, res, next) => {
   try {
-    const userId = req.user._id; 
+    const userId = req.user._id;
     const file = req.file;
 
     if (!file) {
@@ -19,10 +19,7 @@ export const updateUserAvatar = async (req, res, next) => {
       { new: true }
     ).select("-password");
 
-    res.status(200).json({
-      message: "Avatar updated successfully",
-      avatarUrl: updatedUser.avatar,
-    });
+    res.status(200).json({ url: updatedUser.avatar });
   } catch (error) {
     next(error);
   }
